@@ -1,0 +1,197 @@
+#include <iostream>
+
+using namespace std;
+
+class Doublyll
+{
+  public:
+  struct Node
+  {
+      int data;
+      Node *prev;
+      Node *next;
+  };
+  Node *head,*tail;
+  void createdll()
+  {   
+      head=NULL;
+      int choice=1;
+      while(choice)
+      {Node *newnode;
+      newnode=new Node();
+      cout<<"Enter data=\n";
+      cin>>newnode->data;
+      newnode->prev=NULL;
+      newnode->next=NULL;
+      if(head==NULL)
+      {
+          head=tail=newnode;
+      }
+      else
+      {
+          tail->next=newnode;
+          newnode->prev=tail;
+          tail=newnode;
+      }
+      cout<<"DO YOU WANT TO CONTINUE=\n";
+      cin>>choice;
+  }
+  }
+  void insertatbeg()
+  {
+      Node *newnode;
+      newnode=new Node();
+      cout<<"\nEnter data=\n";
+      cin>>newnode->data;
+      newnode->prev=NULL;
+      newnode->next=NULL;
+      head->prev=newnode;
+      newnode->next=head;
+      head=newnode;
+    
+  }
+  void insertatend()
+  {
+      Node *newnode;
+      newnode=new Node();
+      cout<<"\nEnter data=\n";
+      cin>>newnode->data;
+      newnode->prev=NULL;
+      newnode->next=NULL;
+      tail->next=newnode;
+      newnode->prev=tail;
+      tail=newnode;
+  }
+  void insertatpos()
+  {
+      int pos;
+      int i=1;
+      cout<<"\nEnter position=\n"; 
+      cin>>pos;
+      if(pos==1)
+      {
+          insertatbeg();
+      }
+      else
+      {
+          Node *newnode,*temp;
+          temp=head;
+          newnode=new Node();
+          cout<<"\nEnter data=\n";
+          cin>>newnode->data;
+          while(i<pos-1)
+          {
+              temp=temp->next;
+              i++;
+          }
+          newnode->prev=temp;
+          newnode->next=temp->next;
+          temp->next=newnode;
+          newnode->next->prev=newnode;
+      }
+  }
+  void delfrombeg()
+  {
+      Node *temp;
+      if(head==NULL)
+      {
+          cout<<"\n List is empty\n";
+      }
+      else
+      {
+          temp=head;
+          head=head->next;
+          head->prev=NULL;
+          delete temp;
+      }
+  }
+  void delfromend()
+  {
+      Node *temp;
+      if(tail==NULL)
+      {
+          cout<<"\nList is empty\n";
+      }
+      else
+      {
+          temp=tail;
+          tail->prev->next=NULL;
+          tail=tail->prev;
+          delete temp;
+      }
+  }
+  void delfrompos()
+  {
+      int pos;
+      int i=1;
+      Node *temp;
+      temp=head;
+      cout<<"\nEnter the position=\n";
+      cin>>pos;
+      while(i<pos)
+      {
+          temp=temp->next;
+          i++;
+      }
+      temp->prev->next=temp->next;
+      temp->next->prev=temp->prev;
+      delete temp;
+  }
+  void display()
+  {
+      Node *temp;
+      temp=head;
+      while(temp!=NULL)
+      {
+          cout<<temp->data;
+          temp=temp->next;
+      }
+  }
+};
+int main()
+{
+    Doublyll d;
+    d.createdll();
+    d.display();
+    int c;
+    do
+    {
+        cout<<"\n DOUBLY LINKED LIST \n";
+        cout<<"1) INSERTATBEG        2) INSERTATEND\n"
+            <<"3) INSERTATPOS        4) DELFROMBEG\n"
+            <<"5) DELFROMEND         6) DELATPOS\n";
+        cout<<"Enter your choice\n";
+        cin>>c;
+        switch(c)
+        {
+            case 1:
+              d.insertatbeg();
+              d.display();
+              break;
+            case 2:
+              d.insertatend();
+              d.display();
+              break;
+            case 3:
+              d.insertatpos();
+              d.display();
+              break;
+            case 4:
+              d.delfrombeg();
+              d.display();
+              break;
+            case 5:
+              d.delfromend();
+              d.display();
+              break;
+            case 6:
+              d.delfrompos();
+              d.display();
+              break;
+            default:
+              break;
+        }
+    }while(c!=0);
+    
+}
+

@@ -1,0 +1,259 @@
+
+#include <iostream>
+
+using namespace std;
+class SinglyLinkedList
+{
+    public:
+    struct Node
+    {
+        int data;
+        Node *next;
+    };
+    Node *head,*tail;
+    public:
+    SinglyLinkedList()
+    {
+        head=tail=NULL;
+    }
+    ~SinglyLinkedList()
+    {
+        this->clear();
+    }
+    
+
+   void IsEmpty()
+   {
+       if (head==NULL)
+       this->Print();
+       return;
+   }
+   void InsertatBeg()
+   {
+       int x;
+       cout<<"Enter the value to be inserted=\n";
+       cin>>x;
+       Node *temp=new Node();
+       temp->data=x;
+       temp->next=head;
+       this->Print();
+       return;
+   }
+   void InsertatLoc(int, int)
+   {Node *temp1=new Node();
+   int data;
+   int n;
+   temp1->data=data;
+   temp1->next=NULL;
+   if(n==1)
+   {
+       temp1->next=head;
+       head=temp1;
+       return;
+   }
+   Node *temp2=head;
+   for(int i=0;i<n-2;i++)
+   {
+   temp2=temp2->next;
+   }
+   temp1->next=temp2->next;
+   temp2->next=temp1;
+   this->Print();
+   return;
+   }
+   void InsertatEnd()
+   {   int data;
+       Node *temp=new Node();
+       temp->data=data;
+       temp->next=NULL;
+       if(head==NULL)
+       head=tail=temp;
+       else
+       tail->next=temp;
+       tail=temp;
+       this->Print();
+       return;
+   }
+   void DeleteBeg()
+   {
+       if(head==NULL || tail==NULL)
+       {
+           cout<<"List is Empty";
+       }
+       Node *temp=new Node();
+       temp=head;
+       head=head->next;
+       delete temp;
+       this->Print();
+       return;
+    }
+   void DeleteatLoc(int n)
+   {   Node *temp=new Node();
+       Node *temp1=new Node();
+       temp=head;
+       if(head==NULL || tail==NULL)
+       { cout<<"List is empty \n";
+       return;
+       }
+       else
+       for(int i=0;temp!=NULL&&i<n-1;i++)
+       {
+         temp=temp->next;
+       }
+       temp1=temp->next->next;
+       delete temp->next;
+       temp->next=temp1;
+       this->Print();
+       return;
+       }
+    void DeleteEnd()
+    {
+      if(head==NULL || tail==NULL)
+      {
+          cout<<"List is Empty\n";
+          return;
+      }
+      if(head==tail)
+      head=tail=NULL;
+      else
+      {
+      Node *temp=head;
+      while(temp->next!=tail)
+      temp=temp->next;
+      temp->next=NULL;
+      tail=temp;
+      delete temp;
+      }
+      this->Print();
+      return;
+    }
+    void Search()
+    {   int ele;
+        Node *temp=new Node();
+        temp=head;
+        cout<<"\nEnter the item to be searched=\n";
+        cin>>ele;
+        while(temp!=NULL)
+        {
+            if(temp->data==ele)
+            {
+                cout<<"Element found\n";
+                return;
+            }
+            temp=temp->next;
+        }
+    }
+    void Reverse()
+    {
+        Node *temp,*prev,*last;
+        temp=head;
+        prev=NULL;
+        last=NULL;
+        while(temp!=NULL)
+        {
+            last=temp->next;
+            temp->next=prev;
+            prev=temp;
+            temp=last;
+        }
+        head=prev;
+        this->Print();
+        return;
+    }
+    void Count()
+    {
+        int c=0;
+        Node *temp=new Node();
+        temp=head;
+        temp=temp->next;
+        c++;
+        cout<<"\n Number of items in the Single Linked list is "<<c;
+    }
+    void Print()
+    { 
+        if(head==NULL)
+        {
+            cout<<"\n List is empty\n";
+        }
+       Node *temp=new Node();
+       temp=head;
+       cout<<"\n List:\n";
+       while(temp!=NULL)
+       {
+           cout<<temp->data;
+           cout<<temp->next;
+       }
+       cout<<"\n";
+    }
+    void clear()
+    {
+        if(head==NULL)
+        return;
+        Node *next=NULL;
+        Node *temp=head;
+        while(temp->next!=NULL)
+        {
+            next=temp->next;
+            delete temp;
+            temp=next;
+        }
+        delete temp;
+        head=tail=NULL;
+        return;
+        }};
+    int main()
+{ SinglyLinkedList l;
+    int choice;
+    do
+    {
+        cout<<"\n SINGLY LINKED LIST \n";
+        cout<<"1) IsEmptyOrNot       2) InsertatBeg\n"
+            <<"3) InsertatLoc        4) InsertatEnd\n"
+            <<"5) DeleteBeg          6) DeleteatLoc\n"
+            <<"7) DeleteEnd          8) Search\n"
+            <<"9) Reverse            10)Count\n"
+            <<"11)Print              12)Exit\n";
+        cout<<"Enter your choice\n";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1:
+              l.IsEmpty();
+              break;
+            case 2:
+              l.InsertatBeg();
+              break;
+            case 3:
+              l.InsertatLoc(2,3);
+              break;
+            case 4:
+              l.InsertatEnd();
+              break;
+            case 5:
+              l.DeleteBeg();
+              break;
+            case 6:
+              l.DeleteatLoc(2);
+              break;
+            case 7:
+              l.DeleteEnd();
+              break;
+            case 8:
+              l.Search();
+              break;
+            case 9:
+              l.Reverse();
+              break;
+            case 10:
+              l.Count();
+              break;
+            case 11:
+              l.Print();
+              break;
+            case 12:
+              default:
+              break;
+        }
+    }while(choice!=12);
+    return 0;
+}
