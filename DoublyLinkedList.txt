@@ -12,31 +12,7 @@ class Doublyll
       Node *next;
   };
   Node *head,*tail;
-  void createdll()
-  {   
-      head=NULL;
-      int choice=1;
-      while(choice)
-      {Node *newnode;
-      newnode=new Node();
-      cout<<"Enter data=\n";
-      cin>>newnode->data;
-      newnode->prev=NULL;
-      newnode->next=NULL;
-      if(head==NULL)
-      {
-          head=tail=newnode;
-      }
-      else
-      {
-          tail->next=newnode;
-          newnode->prev=tail;
-          tail=newnode;
-      }
-      cout<<"DO YOU WANT TO CONTINUE=\n";
-      cin>>choice;
-  }
-  }
+ 
   void insertatbeg()
   {
       Node *newnode;
