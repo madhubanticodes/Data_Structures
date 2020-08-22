@@ -1,0 +1,150 @@
+#include <iostream>
+
+using namespace std;
+
+class Poly
+{
+    public:
+    struct Node
+    {
+        int coef,expo;
+        Node *next;
+    };
+    Node *new1,*head1,*p1,*new2,*head2,*p2;
+    void createpoly1()
+    {   char ch;
+        cout<<"\n Enter first polynomial=\n";
+        do
+        {   
+            new1=new Node();
+            cout<<"\n Enter coefficient=\n";
+            cin>>new1->coef;
+            cout<<"\n Enter exponent=\n";
+            cin>>new1->expo;
+            new1->next=NULL;
+            if(head1==NULL)
+            {
+                head1=new1;
+                p1=new1;
+            }
+            else
+            {
+                p1->next=new1;
+                p1=new1;
+            }
+            cout<<"\n Do you want to continue(y/n)\n";
+            cin>>ch;
+        }while(ch=='y');
+    }
+    
+    void createpoly2()
+    {   char ch;
+        cout<<"\n Enter second polynomial=\n";
+        do
+        {   
+            new2=new Node();
+            cout<<"\n Enter coefficient=\n";
+            cin>>new2->coef;
+            cout<<"\n Enter exponent=\n";
+            cin>>new2->expo;
+            new2->next=NULL;
+            if(head2==NULL)
+            {
+                head2=new2;
+                p2=new2;
+            }
+            else
+            {
+                p2->next=new2;
+                p2=new2;
+            }
+            cout<<"\n Do you want to continue(y/n)\n";
+            cin>>ch;
+        }while(ch=='y');
+    }
+    
+    void displaypoly1()
+    {
+        p1=head1;
+        cout<<"\n First polynomial=\n";
+        while(p1!=NULL)
+        {
+            cout<<p1->coef<<""<<p1->expo;
+            p1=p1->next;
+            if(p1!=NULL)
+            {
+                cout<<"+";
+            }
+        }
+    }
+    
+     void displaypoly2()
+    {
+        p2=head2;
+        cout<<"\n Second polynomial=\n";
+        while(p2!=NULL)
+        {
+            cout<<p2->coef<<""<<p2->expo;
+            p2=p2->next;
+            if(p2!=NULL)
+            {
+                cout<<"+";
+            }
+        }
+    }
+    
+    void addpoly()
+    {
+        p1=head1;
+        p2=head2;
+        while(p1!=NULL && p2!=NULL)
+        {
+            if(p1->expo==p2->expo)
+            {
+                cout<<p1->coef+p2->coef<<p1->expo;
+                p1=p1->next;
+                p2=p2->next;
+            }
+            else if(p1->expo>p2->expo)
+            {
+                cout<<p1->coef<<p1->expo;
+                p1=p1->next;
+            }
+            else
+            {
+                cout<<p2->coef<<p2->expo;
+                p2=p2->next;
+            }
+            if(p1!=NULL || p2!=NULL)
+            cout<<"+";
+            while(p1!=NULL)
+            {
+                cout<<p1->coef<<p1->expo;
+                p1=p1->next;
+                if(p1!=NULL)
+                cout<<"+";
+            }
+            while(p2!=NULL)
+            {
+                cout<<p2->coef<<p2->expo;
+                p2=p2->next;
+                if(p2!=NULL)
+                cout<<"+";
+            }
+            
+            
+        }
+    }
+    
+};
+
+int main()
+{
+    Poly p;
+    p.createpoly1();
+    p.createpoly2();
+    p.displaypoly1();
+    p.displaypoly2();
+    p.addpoly();
+}
+
