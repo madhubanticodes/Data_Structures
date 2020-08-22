@@ -12,34 +12,7 @@ class DoublyCLL
         Node *prev;
     };
     Node *head,*tail;
-    void createDCLL()
-    {
-        Node *newnode;
-        head=NULL;
-        int choice=1;
-        while(choice)
-        {
-            newnode=new Node();
-            cout<<"\n Enter data\n";
-            cin>>newnode->data;
-            if(head==NULL)
-            {
-                head=tail=newnode;
-                head->next=head;
-                head->prev=head;
-            }
-            else
-            {
-                tail->next=newnode;
-                newnode->prev=tail;
-                newnode->next=head;
-                head->prev=newnode;
-                tail=newnode;
-            }
-            cout<<"\n 1 to continue, 0 to exit\n";
-            cin>>choice;
-        }
-    }
+
     void display()
     {
         Node *temp;
