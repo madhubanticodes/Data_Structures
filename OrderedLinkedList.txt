@@ -1,0 +1,317 @@
+#include <iostream>
+
+using namespace std;
+ 
+ 
+class OrderedLL
+{
+    public:
+    struct Node
+    {
+        int data;
+        Node *next;
+    };
+    Node *head;
+    void sort()
+    {
+        Node *ptr,*cpt;
+        int temp;
+        ptr=head;
+        while(ptr!=NULL)
+        {
+            cpt=ptr->next;
+            while(cpt!=NULL)
+            {
+              if(ptr->data>cpt->data)
+              {
+                  temp=ptr->data;
+                  ptr->data=cpt->data;
+                  cpt->data=temp;
+              }
+              cpt->next=NULL;
+            }
+            ptr=ptr->next;
+        }
+        
+    }
+    void InsertatBeg()
+   {   Node *newnode;
+       newnode=new Node();
+       cout<<"Enter the value to be inserted=\n";
+       cin>>newnode->data;
+       head=newnode;
+   }
+   void InsertatPos()
+   {Node *newnode,*temp;
+    int pos;
+    int i=1;
+    newnode=new Node();
+    cout<<"\nEnter position=\n";
+    cin>>pos;
+    temp=head;
+    while(i<pos-1)
+    {
+        temp=temp->next;
+        i++;
+    }
+    cout<<"\nEnter data=\n";
+    cin>>newnode->data;
+    newnode->next=temp->next;
+    temp->next=newnode;
+   }
+   void InsertatEnd()
+   {  Node *newnode,*temp;
+      newnode=new Node();
+      cout<<"\n Enter data=\n";
+      cin>>newnode->data;
+      newnode->next=NULL;
+      temp=head;
+      while(temp->next!=NULL)
+      {
+          temp=temp->next;
+      }
+      temp->next=newnode;
+   }
+   void DeletefromBeg()
+   {
+       if(head==NULL)
+       {
+           cout<<"List is Empty";
+       }
+       else
+       {
+           Node *temp;
+           temp=head;
+           head=head->next;
+           delete temp;
+       }
+    }
+   void DeletefromPos()
+   {   Node *nextnode,*temp;
+       int pos;
+       int i=1;
+       temp=head;
+       cout<<"\n Enter position=\n";
+       cin>>pos;
+       while(i<pos-1)
+       {
+           temp=temp->next;
+           i++;
+       }
+       nextnode=temp->next;
+       temp->next=nextnode->next;
+       delete nextnode;
+       }
+    void DeletefromEnd()
+    {
+      Node *temp,*prev;
+      temp=head;
+      while(temp->next!=NULL)
+      {
+          prev=temp;
+          temp=temp->next;
+      }
+      if(temp==head)
+      {
+          head=NULL;
+      }
+      else
+      {
+          prev->next=NULL;
+      }
+      delete temp;
+    }
+    
+      void display()
+    {   Node *temp;
+        temp=head;
+        while(temp!=NULL)
+        {
+            cout<<temp->data;
+            temp=temp->next;
+        }
+    }
+    
+Node *merge()
+{   Node *p,*q ,*sorting;
+	Node *head3;
+	
+	if(p == NULL)
+		return q;
+	if(q == NULL)
+		return p;
+	
+	if(p && q)
+	{
+		if(p->data <= q->data)
+		{
+			sorting = p;
+			p = sorting->next;
+		}
+		else
+		{
+			sorting = q;
+			q = sorting->next;
+		}
+		
+	}
+	
+	head3 = sorting;
+	
+	while(p && q)
+	{
+		if(p->data <= q->data)
+		{
+			sorting->next = p;
+			sorting = p;
+			p = sorting->next;
+		}
+		else
+		{
+			sorting->next = q;
+			sorting = q;
+			q = sorting->next;
+		}
+	}
+	
+	if(p==NULL)
+	{
+		sorting->next = q;
+	}
+	
+	if(q==NULL)
+	{
+		sorting->next = p;
+	}
+	
+	return head3;
+	p=NULL,q=NULL,sorting=NULL;
+	Node *head1=NULL,*head2=NULL;
+	int n1 , n2 , a , i , n;
+	
+		
+	cout<<"Enter the number of nodes in the First Linked List\n";
+	cin>>n1;
+	
+	cout<<"Enter the number of nodes in the second Linked List\n";
+	cin>>n2;
+	
+	if(n1 > 0)
+	{
+	cout<<"Enter the first Linked List\n";
+	cin>>a;
+	p = new Node();
+	p->data = a;
+	p->next = NULL;
+	head1 = p;
+	}
+	
+	for(int i=1;i<n1;i++)
+	{
+		cin>>a;
+		q = new Node();
+		q->data = a;
+		q->next = NULL;
+		p->next = q;
+		p = p->next;		
+	}
+
+	if(n2 > 0)
+	{
+	cout<<"Enter the second Linked List\n";
+    cin>>a;
+	p = new Node();
+	p->data = a;
+	p->next = NULL;
+	head2 = p;
+	}
+		
+	for(int i=1;i<n2;i++)
+	{
+		cin>>a;
+		q = new Node();
+		q->data = a;
+		q->next = NULL;
+		p->next = q;
+		p = p->next;		
+	}
+	p = head1;
+	q = head2;
+	cout<<"\n First Linked List => ";
+	while(p!=NULL)
+	{
+		cout<<p->data;
+		p = p->next;
+	}
+
+	cout<<"\n Second Linked List =>";
+	while(q!=NULL)
+	{
+		cout<<q->data;
+		q = q->next;
+	}
+
+	p = head1;
+	q = head2;
+	sorting = merge();
+	
+	cout<<"\n Sorted Merged Linked List =>";
+	while(sorting!=NULL)
+	{
+		cout<<sorting->data;
+		sorting = sorting->next;
+	}
+	return 0;
+}
+};
+
+int main()
+{
+    OrderedLL o;
+    o.sort();
+    int choice;
+    do
+    {
+        cout<<"\n ORDERED LINKED LIST \n";
+        cout<<"1) InsertatBeg       2) InsertatPos\n"
+            <<"3) InsertatPos       4) DeletefromBeg\n"
+            <<"5) DeletefromPos     6) DeletefromEnd\n"
+            <<"            7) Merge\n";
+        cout<<"Enter your choice=\n";
+        cin>>choice;
+        switch(choice)
+        {
+            case 1:
+                o.InsertatBeg();
+                o.display();
+                break;
+            case 2:
+                 o.InsertatPos();
+                 o.display();
+                 break;
+            case 3:
+                 o.InsertatEnd();
+                 o.display();
+                 break;
+            case 4:
+                 o.DeletefromBeg();
+                 o.display();
+                 break;
+            case 5:
+                 o.DeletefromPos();
+                 o.display();
+                 break;
+            case 6:
+                 o.DeletefromEnd();
+                 o.display();
+                 break;
+            case 7:
+                 o.merge();
+                 break;
+            default:
+                 break;
+                 
+               
+        }
+    }while(choice!=0);
+}
