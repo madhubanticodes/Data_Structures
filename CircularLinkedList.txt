@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-
+template <class X>
 class Circularll
 {   public:
     struct Node
@@ -10,7 +10,31 @@ class Circularll
         Node *next;
     };
     Node *head,*tail;
-   
+    void createcll()
+    {
+        int choice=1;
+        Node *newnode,*temp;
+        head=NULL;
+        while(choice)
+        {
+            newnode=new Node();
+            cout<<"\nEnter data=\n";
+            cin>>newnode->data;
+            newnode->next=NULL;
+            if(head==NULL)
+            {
+                head=temp=newnode;
+            }
+            else
+            {
+                temp->next=newnode;
+                temp=newnode;
+            }
+            temp->next=head;
+            cout<<"\n 1 to continue, 0 to exit \n";
+            cin>>choice;
+        }
+    }
     void display()
     {
         Node *temp;
@@ -161,10 +185,61 @@ class Circularll
             delete temp;
         }
     }
+   void reversecll()
+   {
+      Node *cur,*prev,*nextnode;
+      cur=tail->next;
+      nextnode=cur->next;
+      if(tail==NULL)
+       {
+         cout<<"\n List is empty\n";
+        }
+      else
+       {
+         while(cur!=tail)
+          {
+             prev=cur;
+             cur=nextnode;
+             nextnode=cur->next;
+             cur->next=prev;
+          }
+      nextnode->next=tail;
+      tail=nextnode;
+     }
+  }
+  void search(int item) {
+   int pos = 0;
+Node *cur=NULL;
+head=NULL;
+
+   if(head == NULL) {
+      cout<<"\nLinked List not initialized\n";
+     
+   } 
+
+   cur = head;
+
+   while(cur->next != head) {
+      if(cur->data == item) {
+         cout<<"\nfound at position <<pos;
+         return;
+      }
+
+      cur = cur->next;
+      pos++;
+   }
+
+   if(cur->data == item) {
+      cout<<"\n found at position "<<pos;;
+      return;
+   }
+
+   cout<<"\ndoes not exist in the list";;
+}
 };
 int main()
 {
-    Circularll c;
+    Circularll<int> c;
     c.createcll();
     c.display();
     int l;
@@ -173,7 +248,8 @@ int main()
         cout<<"\n CIRCULAR LINKED LIST \n";
         cout<<"1) INSERTATBEG        2) INSERTATEND\n"
             <<"3) INSERTATPOS        4) DELFROMBEG\n"
-            <<"5) DELFROMEND         6) DELATPOS\n";
+            <<"5) DELFROMEND         6) DELATPOS\n"
+            <<"7) REVERSE            8) SEARCH\n";
         cout<<"Enter your choice\n";
         cin>>l;
         switch(l)
@@ -202,10 +278,17 @@ int main()
               c.delfrompos();
               c.display();
               break;
+            case 7:
+               c.reversecll();
+               c.display();
+            case 8:
+               c.search(5);
+               break;
             default:
               break;
         }
     }while(l!=0);
 }
+
 
 
