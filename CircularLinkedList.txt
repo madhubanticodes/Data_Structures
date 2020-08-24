@@ -10,31 +10,7 @@ class Circularll
         Node *next;
     };
     Node *head,*tail;
-    void createcll()
-    {
-        int choice=1;
-        Node *newnode,*temp;
-        head=NULL;
-        while(choice)
-        {
-            newnode=new Node();
-            cout<<"\nEnter data=\n";
-            cin>>newnode->data;
-            newnode->next=NULL;
-            if(head==NULL)
-            {
-                head=temp=newnode;
-            }
-            else
-            {
-                temp->next=newnode;
-                temp=newnode;
-            }
-            temp->next=head;
-            cout<<"\n 1 to continue, 0 to exit \n";
-            cin>>choice;
-        }
-    }
+ 
     void display()
     {
         Node *temp;
