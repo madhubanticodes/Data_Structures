@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-
+template <class X>
 class Doublyll
 {
   public:
@@ -12,7 +12,6 @@ class Doublyll
       Node *next;
   };
   Node *head,*tail;
- 
   void insertatbeg()
   {
       Node *newnode;
@@ -113,6 +112,42 @@ class Doublyll
       temp->next->prev=temp->prev;
       delete temp;
   }
+  void reversedll()
+{
+      Node *cur,*nextnode;
+      cur=head;
+      while(cur!=NULL)
+      {
+         nextnode=cur->next;
+         cur->next=cur->prev;
+         cur->prev=nextnode;
+         cur=nextnode;
+      }
+      cur=head;
+      head=tail;
+      tail=cur;
+}
+  void search(int data)
+{     Node *cur;
+      int pos=0;
+      cur=head;
+      while(cur!=NULL)
+      {
+        pos++;
+        if(cur->data=data)
+          {
+            cout<<"\n Found at location="<<pos;
+           }
+        if(cur->next != NULL)
+         cur = cur->next;
+      else
+         break;
+      }
+
+   cout<<"\n does not exist in the list\n";
+}
+     
+
   void display()
   {
       Node *temp;
@@ -126,7 +161,7 @@ class Doublyll
 };
 int main()
 {
-    Doublyll d;
+    Doublyll<int> d;
     d.createdll();
     d.display();
     int c;
@@ -135,7 +170,8 @@ int main()
         cout<<"\n DOUBLY LINKED LIST \n";
         cout<<"1) INSERTATBEG        2) INSERTATEND\n"
             <<"3) INSERTATPOS        4) DELFROMBEG\n"
-            <<"5) DELFROMEND         6) DELATPOS\n";
+            <<"5) DELFROMEND         6) DELATPOS\n"
+            <<"7) REVERSE            8) SEARCH\n";
         cout<<"Enter your choice\n";
         cin>>c;
         switch(c)
@@ -164,10 +200,19 @@ int main()
               d.delfrompos();
               d.display();
               break;
+            case 7:
+              d.reversedll();
+              d.display();
+            case 8:
+              d.search(7);
+              break;
+              break;
             default:
               break;
         }
     }while(c!=0);
     
 }
+
+
 
