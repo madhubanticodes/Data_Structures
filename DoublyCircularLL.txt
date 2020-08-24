@@ -1,227 +1,242 @@
 #include <iostream>
 
 using namespace std;
-
-class DoublyCLL
+template <class X>
+class Doublyll
 {
-    public:
-    struct Node
-    {
-        int data;
-        Node *next;
-        Node *prev;
-    };
-    Node *head,*tail;
+  public:
+  struct Node
+  {
+      int data;
+      Node *prev;
+      Node *next;
+  };
+  Node *head,*tail;
+  void createdll()
+  {   
+      head=NULL;
+      int choice=1;
+      while(choice)
+      {Node *newnode;
+      newnode=new Node();
+      cout<<"Enter data=\n";
+      cin>>newnode->data;
+      newnode->prev=NULL;
+      newnode->next=NULL;
+      if(head==NULL)
+      {
+          head=tail=newnode;
+      }
+      else
+      {
+          tail->next=newnode;
+          newnode->prev=tail;
+          tail=newnode;
+      }
+      cout<<"DO YOU WANT TO CONTINUE=\n";
+      cin>>choice;
+  }
+  }
+  void insertatbeg()
+  {
+      Node *newnode;
+      newnode=new Node();
+      cout<<"\nEnter data=\n";
+      cin>>newnode->data;
+      newnode->prev=NULL;
+      newnode->next=NULL;
+      head->prev=newnode;
+      newnode->next=head;
+      head=newnode;
+    
+  }
+  void insertatend()
+  {
+      Node *newnode;
+      newnode=new Node();
+      cout<<"\nEnter data=\n";
+      cin>>newnode->data;
+      newnode->prev=NULL;
+      newnode->next=NULL;
+      tail->next=newnode;
+      newnode->prev=tail;
+      tail=newnode;
+  }
+  void insertatpos()
+  {
+      int pos;
+      int i=1;
+      cout<<"\nEnter position=\n"; 
+      cin>>pos;
+      if(pos==1)
+      {
+          insertatbeg();
+      }
+      else
+      {
+          Node *newnode,*temp;
+          temp=head;
+          newnode=new Node();
+          cout<<"\nEnter data=\n";
+          cin>>newnode->data;
+          while(i<pos-1)
+          {
+              temp=temp->next;
+              i++;
+          }
+          newnode->prev=temp;
+          newnode->next=temp->next;
+          temp->next=newnode;
+          newnode->next->prev=newnode;
+      }
+  }
+  void delfrombeg()
+  {
+      Node *temp;
+      if(head==NULL)
+      {
+          cout<<"\n List is empty\n";
+      }
+      else
+      {
+          temp=head;
+          head=head->next;
+          head->prev=NULL;
+          delete temp;
+      }
+  }
+  void delfromend()
+  {
+      Node *temp;
+      if(tail==NULL)
+      {
+          cout<<"\nList is empty\n";
+      }
+      else
+      {
+          temp=tail;
+          tail->prev->next=NULL;
+          tail=tail->prev;
+          delete temp;
+      }
+  }
+  void delfrompos()
+  {
+      int pos;
+      int i=1;
+      Node *temp;
+      temp=head;
+      cout<<"\nEnter the position=\n";
+      cin>>pos;
+      while(i<pos)
+      {
+          temp=temp->next;
+          i++;
+      }
+      temp->prev->next=temp->next;
+      temp->next->prev=temp->prev;
+      delete temp;
+  }
+  void reversedll()
+{
+      Node *cur,*nextnode;
+      cur=head;
+      while(cur!=NULL)
+      {
+         nextnode=cur->next;
+         cur->next=cur->prev;
+         cur->prev=nextnode;
+         cur=nextnode;
+      }
+      cur=head;
+      head=tail;
+      tail=cur;
+}
+  void search(int data)
+{     Node *cur;
+      int pos=0;
+      cur=head;
+      while(cur!=NULL)
+      {
+        pos++;
+        if(cur->data=data)
+          {
+            cout<<"\n Found at location="<<pos;
+           }
+        if(cur->next != NULL)
+         cur = cur->next;
+      else
+         break;
+      }
 
-    void display()
-    {
-        Node *temp;
-        temp=head;
-        if(head==NULL)
-        {
-            cout<<"\n List is empty\n";
-        }
-        else
-        {
-            while(temp!=tail)
-            {
-                cout<<temp->data;
-                temp=temp->next;
-            }
-            cout<<temp->data;
-        }
-    }
-    void insertatbeg()
-    {
-        Node *newnode;
-        newnode=new Node();
-        cout<<"\n Enter data \n";
-        cin>>newnode->data;
-        if(head==NULL)
-        {
-            head=tail=newnode;
-            newnode->next=tail;
-            newnode->prev=head;
-        }
-        else
-        {
-            newnode->next=head;
-            head->prev=newnode;
-            newnode->prev=tail;
-            tail->next=newnode;
-            head=newnode;
-        }
-    }
-        void insertatend()
-        {
-            Node *newnode;
-            newnode=new Node();
-            cout<<"\n Enter data \n";
-            cin>>newnode->data;
-         if(head==NULL)
-          {
-            head=tail=newnode;
-            newnode->next=tail;
-            newnode->prev=head;
-          }
-          else
-          {
-              newnode->prev=tail;
-              tail->next=newnode;
-              newnode->next=head;
-              head->prev=newnode;
-              tail=newnode;
-          }
-            
-        }
-     void insertatpos()
-     {
-         Node *newnode,*temp;
-         int pos;
-         int i=1;
-         cout<<"\n Enter position=\n";
-         cin>>pos;
-         if(pos==1)
-         {
-             insertatbeg();
-         }
-         else
-         {
-             newnode=new Node();
-             cout<<"\n Enter data=\n";
-             cin>>newnode->data;
-             temp=head;
-             while(i<pos-1)
-             {
-                 temp=temp->next;
-                 i++;
-             }
-             newnode->prev=temp;
-             newnode->next=temp->next;
-             temp->next->prev=newnode;
-             temp->next=newnode;
-         }
-     }
-     void delfrombeg()
-     {
-         Node *temp;
-         temp=head;
-         if(head==NULL)
-         {
-             cout<<"\n List is empty\n";
-         }
-         else if(head->next==head)
-         {
-             head=tail;
-             delete temp;
-         }
-         else
-         {
-             head=head->next;
-             head->prev=tail;
-             tail->next=head;
-             delete temp;
-         }
-     }
-     void delfromend()
-     {
-         Node *temp;
-         temp=tail;
-         if(head==NULL)
-         {
-             cout<<"\n List is empty\n";
-         }
-         else if(head->next==head)
-         {
-             head=tail=NULL;
-             delete temp;
-         }
-         else
-         {
-             tail=tail->prev;
-             tail->next=head;
-             head->prev=tail;
-             delete temp;
-         }
-     }
-     void delfrompos()
-     {
-        Node *temp;
-         int pos;
-         int i=1;
-         temp=head;
-         cout<<"\n Enter position=\n";
-         cin>>pos;
-         if(pos==1)
-         {
-             delfrombeg();
-         }
-         else
-         {
-             while(i<pos)
-             {
-                 temp=temp->next;
-                 i++;
-             } 
-             temp->prev->next=temp->next;
-             temp->next->prev=temp->prev;
-             if(temp->next==head)
-             {
-                 tail=temp->prev;
-                 delete temp;
-             }
-             else
-             {
-                 delete temp;
-             }
-         }     
-     }
+   cout<<"\n does not exist in the list\n";
+}
+     
+
+  void display()
+  {
+      Node *temp;
+      temp=head;
+      while(temp!=NULL)
+      {
+          cout<<temp->data;
+          temp=temp->next;
+      }
+  }
 };
-
 int main()
 {
-    DoublyCLL a;
-    a.createDCLL();
-    a.display();
+    Doublyll<int> d;
+    d.createdll();
+    d.display();
     int c;
     do
     {
-        cout<<"\n DOUBLY CIRCULAR LINKED LIST \n";
+        cout<<"\n DOUBLY LINKED LIST \n";
         cout<<"1) INSERTATBEG        2) INSERTATEND\n"
             <<"3) INSERTATPOS        4) DELFROMBEG\n"
-            <<"5) DELFROMEND         6) DELATPOS\n";
+            <<"5) DELFROMEND         6) DELATPOS\n"
+            <<"7) REVERSE            8) SEARCH\n";
         cout<<"Enter your choice\n";
         cin>>c;
         switch(c)
         {
             case 1:
-              a.insertatbeg();
-              a.display();
+              d.insertatbeg();
+              d.display();
               break;
             case 2:
-              a.insertatend();
-              a.display();
+              d.insertatend();
+              d.display();
               break;
             case 3:
-              a.insertatpos();
-              a.display();
+              d.insertatpos();
+              d.display();
               break;
             case 4:
-              a.delfrombeg();
-              a.display();
+              d.delfrombeg();
+              d.display();
               break;
             case 5:
-              a.delfromend();
-              a.display();
+              d.delfromend();
+              d.display();
               break;
             case 6:
-              a.delfrompos();
-              a.display();
+              d.delfrompos();
+              d.display();
+              break;
+            case 7:
+              d.reversedll();
+              d.display();
+            case 8:
+              d.search(7);
+              break;
               break;
             default:
               break;
         }
     }while(c!=0);
+    
 }
 
 
