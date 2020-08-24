@@ -1,16 +1,16 @@
-
 #include <iostream>
 
 using namespace std;
+template <class X>
 class SinglyLinkedList
 {
     public:
     struct Node
     {
         int data;
-        Node *next;
+        Node<X> *next;
     };
-    Node *head,*tail;
+    Node<X> *head,*tail;
     public:
     SinglyLinkedList()
     {
@@ -18,7 +18,12 @@ class SinglyLinkedList
     }
     ~SinglyLinkedList()
     {
-        this->clear();
+        for(Node *p;head!=NULL;)
+        {
+            p=head->next;
+            delete head;
+            head=p;
+         }
     }
     
 
@@ -185,24 +190,9 @@ class SinglyLinkedList
        }
        cout<<"\n";
     }
-    void clear()
-    {
-        if(head==NULL)
-        return;
-        Node *next=NULL;
-        Node *temp=head;
-        while(temp->next!=NULL)
-        {
-            next=temp->next;
-            delete temp;
-            temp=next;
-        }
-        delete temp;
-        head=tail=NULL;
-        return;
-        }};
+    };
     int main()
-{ SinglyLinkedList l;
+{ SinglyLinkedList<int> l;
     int choice;
     do
     {
