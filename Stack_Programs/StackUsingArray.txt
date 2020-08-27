@@ -3,6 +3,7 @@
 int stack[5];
 
 using namespace std;
+template <class X>
 class StackUsingArray
 {
 public:
@@ -46,7 +47,7 @@ void clear()
 };
 int main()
 {
-    StackUsingArray s;
+    StackUsingArray<int> s;
     s.push(5);
     s.push(8);
     s.push(4);
