@@ -1,0 +1,78 @@
+#include <iostream>
+
+using namespace std;
+
+class StackUsingLL
+{
+  public:
+  struct Node
+  {
+    int data;
+    Node *link;
+  };
+  Node *top=0;
+  void push(int x)
+  {
+      Node *newnode;
+      newnode=new Node();
+      newnode->data=x;
+      newnode->link=top;
+      top=newnode;
+  }
+  void display()
+  {
+      Node *temp;
+      temp=top;
+      if(top==0)
+      {
+          cout<<"\n Underflow \n";
+      }
+      else
+      {
+          while(temp!=0)
+          {
+              cout<<temp->data;
+              temp=temp->link;
+          }
+      }
+  }
+  void pop()
+  {
+      Node *temp;
+      temp=top;
+      if(top==0)
+      {
+          cout<<"\n Underflow \n";
+      }
+      else
+      {
+          
+          top=top->link;
+          delete temp;
+      }
+  }
+  void clearLL()
+  {
+      Node *temp;
+      temp=top;
+          while(temp!=NULL)
+          {
+              top=top->link;
+              delete temp;
+              temp=top;
+          }
+      cout<<"\nStack is cleared\n";
+  }
+};
+
+int main()
+{   StackUsingLL s;
+    s.push(2);
+    s.push(3);
+    s.push(10);
+    s.display();
+    cout<<"\n";
+    s.pop();
+    s.display();
+    s.clearLL();
+}
