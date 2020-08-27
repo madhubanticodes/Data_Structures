@@ -1,0 +1,61 @@
+#include <iostream>
+
+int stack[5];
+
+using namespace std;
+class StackUsingArray
+{
+public:
+int top=-1;
+
+void push(int x)
+{
+    if(top==4)
+    {
+        cout<<"\n Overflow \n";
+    }
+    else
+    {
+        top++;
+        stack[top]=x;
+    }
+}
+void pop()
+{
+    if(top==-1)
+    {
+        cout<<"\n Underflow\n";
+    }
+    else
+    {
+        top--;
+    }
+}
+void display()
+{
+    for(int i=top;i>=0;i--)
+    {
+        cout<<stack[i]<<" ";
+    }
+}
+void clear()
+{
+   top=-1;
+   cout<<"\nStack is cleared\n";
+}
+};
+int main()
+{
+    StackUsingArray s;
+    s.push(5);
+    s.push(8);
+    s.push(4);
+    s.push(9);
+    s.push(1);
+    s.display();
+    cout<<"\n";
+    s.pop();
+    s.display();
+    cout<<"\n";
+    s.clear();
+}
