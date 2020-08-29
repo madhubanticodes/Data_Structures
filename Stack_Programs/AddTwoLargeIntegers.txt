@@ -1,0 +1,51 @@
+#include <iostream>
+#include <stack>
+#include <string>
+#include <algorithm>
+ 
+using namespace std;
+ 
+bool num(const string& str)
+{
+    return !str.empty() && find_if(str.begin(), 
+        str.end(), [](char c) { return !isdigit(c); }) == str.end();
+}
+ 
+int main()
+{
+        stack<int> stack1, stack2, result;
+        string input;
+        input = "327";
+        if(!num(input))
+        	cout<<"Not a number";
+        for (auto &c : input) {
+         	stack1.push(c - '0');
+        }
+        input = "512";
+        if(!num(input))
+        	cout<<"Not a number";
+        for (auto &c : input) {
+           stack2.push(c - '0');
+        }
+        int carry=0, op1=0, op2=0;
+        while (!stack1.empty() && !stack2.empty()) {
+                op1=0,op2=0;
+                if (stack1.empty() && stack2.empty()) break;
+                if (!stack1.empty()) { op1 = stack1.top(); stack1.pop(); }
+                if (!stack2.empty()) { op2 = stack2.top(); stack2.pop(); }
+                int Total = 0;
+                Total = op1 + op2 + carry;
+                cout << op1 << " + " << op2 << " + " << carry << " = " << Total << "\n";
+                result.push(Total%10);
+                if (Total >= 10) carry = 1; else carry = 0;
+        }
+ 
+        cout << "\nResult is: ";
+        while (!result.empty()) {
+                cout << result.top();
+                result.pop();
+        }
+ 
+        cout <<"\n";
+}
+ 
