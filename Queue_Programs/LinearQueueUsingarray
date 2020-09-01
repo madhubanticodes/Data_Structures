@@ -1,0 +1,76 @@
+//Code by Madhubanti Mitra
+//19/78015
+
+#include <iostream>
+using namespace std;
+
+int queue[5];
+template <class X>
+class QueueusingArray
+{
+ public:
+ int front=-1;
+ int rear=-1;
+ void enqueue(int x)
+ {
+     if(rear==4)
+     {
+         cout<<"\nOverflow\n";
+     }
+     else if(front==-1 && rear==-1)
+     {
+         front=rear=0;
+         queue[rear]=x;
+     }
+     else
+     {
+         rear++;
+         queue[rear]=x;
+     }
+ }
+ void dequeue()
+ {
+     if(front==-1 && rear==-1)
+     {
+         cout<<"\nQueue is empty\n";
+     }
+     else if(front==rear)
+     {
+         front=rear=-1;
+     }
+     else
+     {
+         cout<<"\nDeleted Element is "<<queue[front]<<"\n";
+         front++;
+     }
+ }
+ void display()
+ {
+     if(front==-1 && rear==-1)
+     {
+         cout<<"\nQueue is empty";
+     }
+     else
+     { int i;
+         for(i=front;i<rear+1;i++)
+         {
+             cout<<queue[i]<<" ";
+         }
+     }
+ }
+};
+
+int main()
+{
+    QueueusingArray<int> q;
+    q.enqueue(5);
+    q.enqueue(6);
+    q.enqueue(4);
+    q.enqueue(8);
+    q.enqueue(1);
+    q.display();
+    q.dequeue();
+    q.dequeue();
+    q.display();
+}
+
