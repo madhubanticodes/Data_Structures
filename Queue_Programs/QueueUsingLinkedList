@@ -1,0 +1,79 @@
+//Code by Madhubanti Mitra
+//19/78015
+
+#include <iostream>
+using namespace std;
+
+class QueueUsingLL
+{
+    public:
+    struct Node
+    {
+       int data;
+       Node *next;
+    };
+    Node *front=0;
+    Node *rear=0;
+
+    
+    void enqueue(int x)
+    {
+        Node *newnode;
+        newnode=new Node();
+        newnode->data=x;
+        newnode->next=0;
+        if(front==0 && rear==0)
+        {
+            front=rear=newnode;
+        }
+        else
+        {
+            rear->next=newnode;
+            rear=newnode;
+        }
+    }
+    void dequeue()
+    {
+        Node *temp;
+        temp=front;
+        if(front==0 && rear==0)
+        {
+            cout<<"Queue is empty";
+        }
+        else
+        {
+            cout<<"Deleted Element is= "<<front->data<<"\n";
+            front=front->next;
+            delete temp;
+        }
+    }
+    void display()
+    {
+        Node *temp;
+        if(front==0 && rear==0)
+        {
+            cout<<"Queue is empty";
+        }
+        else
+        {
+            temp=front;
+            while(temp!=0)
+            {
+                cout<<temp->data<<" ";
+                temp=temp->next;
+            }
+        }
+    }
+};
+
+int main()
+{
+    QueueUsingLL q;
+    q.enqueue(5);
+    q.enqueue(0);
+    q.enqueue(-2);
+    q.enqueue(8);
+    q.display();
+    q.dequeue();
+    q.display();
+}
