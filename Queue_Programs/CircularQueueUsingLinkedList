@@ -1,0 +1,94 @@
+//Code by Madhubanti Mitra
+//19/78015
+
+#include <iostream>
+
+using namespace std;
+
+class CircularQueueUsingLL
+{
+  public:
+  struct Node
+  {
+    int data;
+    Node *next;
+  };
+  Node *front=0;
+  Node *rear=0;
+  
+  void enqueue(int x)
+  {
+      Node *newnode;
+      newnode=new Node();
+      newnode->data=x;
+      newnode->next=0;
+      if(rear==0)
+      {
+          front=rear=newnode;
+          rear->next=front;
+      }
+      else
+      {
+          rear->next=newnode;
+          rear=newnode;
+          rear->next=front;
+      }
+  }
+  
+  void dequeue()
+  {
+      Node *temp;
+      temp=front;
+      if(front==0)
+      {
+          cout<<"Queue is empty";
+      }
+      else if(front==rear)
+      {
+          front=rear=0;
+          delete temp;
+      }
+      else
+      {
+          front=front->next;
+          rear->next=front;
+          delete temp;
+      }
+  }
+  
+  void display()
+  {
+      Node *temp;
+      temp=front;
+      if(front==0)
+      {
+          cout<<"Queue is empty";
+      }
+      else
+      {   cout<<"\nQueue is: ";
+          while(temp->next!=front)
+          {
+              cout<<temp->data<<" ";
+              temp=temp->next;
+          }
+          cout<<temp->data;
+      }
+  }
+};
+
+int main()
+{
+    CircularQueueUsingLL q;
+    q.enqueue(5);
+    q.enqueue(0);
+    q.enqueue(8);
+    q.enqueue(1);
+    q.display();
+    q.dequeue();
+    q.dequeue();
+    q.display();
+    q.enqueue(7);
+    q.enqueue(9);
+    q.enqueue(4);
+    q.display();
+}
