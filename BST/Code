@@ -245,7 +245,7 @@ void bst::recursive_postorder(Node *temp)
 
 
 int main()
-{Node *root=NULL;
+{
     bst b;
     int c;
     do
