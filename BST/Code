@@ -1,0 +1,269 @@
+#include <iostream>
+using namespace std;
+
+const int size=10;
+class Node
+{
+    public:
+     int info;
+     Node *left;
+     Node *right;
+};
+
+Node *root=NULL;
+
+class stack
+{
+    Node *s[size],*n;
+    int top;
+    public:
+     stack()
+     {
+         top=-1;
+     }
+     void push(Node*);
+     Node* pop();
+     int isempty();
+     int isfull();
+};
+
+void stack::push(Node* ele)
+{
+    if(isfull())
+    {
+        cout<<"\nStack is full";
+    }
+    else
+    {
+        top++;
+        s[top]=ele;
+    }
+}
+
+Node* stack::pop()
+{
+    if(isempty())
+    {
+        cout<<"\nNo element to pop";
+        n=0;
+    }
+    else
+    {
+        n=s[top];
+        top--;
+    }
+    return n;
+}
+
+int stack::isempty()
+{
+    if(top==-1)
+      return 1;
+    else
+      return 0;
+}
+
+int stack::isfull()
+{
+    if(top==size-1)
+      return 1;
+    else
+      return 0;
+}
+
+class queue
+{
+    Node *q[size],*n;
+    int front,rear;
+    public:
+      queue()
+       {
+         front=rear=-1;
+       }
+         void enqueue(Node*);
+         Node* dequeue();
+         int isempty();
+         int isfull();
+};
+    
+void queue::enqueue(Node *ele)
+{
+    if(isfull())
+    {
+        cout<<"\nQueue is full";
+    }
+    else if(rear==-1)
+    {
+        front=rear=0;
+    }
+    else if(rear==size-1&&front>0)
+    {
+        rear=0;
+    }
+    else
+    {
+        rear++;
+    }
+        q[rear]=ele;
+}
+
+Node* queue::dequeue()
+{
+    if(isempty())
+    {
+        cout<<"\nQueue is empty, nothing to delete";
+        n=0;
+    }
+    else
+    {
+        n=q[front];
+        if(front==rear)
+        {
+            front=rear=-1;
+        }
+        else if(front==size-1)
+        {
+            front=0;
+        }
+        else
+        {
+            front++;
+        }
+    }
+    return n;
+}
+
+int queue::isempty()
+{
+    return (front==-1&&rear==-1);
+}
+
+int queue::isfull()
+{
+    return ((front==0&&rear==size-1)||front==rear+1);
+}
+
+class bst
+{
+    Node *a,*b,*c;
+    public:
+        void insert();
+        void search(Node*,int);
+        void recursive_inorder(Node*);
+        void recursive_preorder(Node*);
+        void recursive_postorder(Node*);
+        void iterative_inorder(Node*);
+        void iterative_preorder(Node*);
+        void iterative_postorder(Node*);
+        void bfs_traversal(Node*);
+        void mirror_image(Node*);
+        void count_leafs(Node*);
+        void searchele(int ele);
+};
+
+void bst::insert()
+{
+    int i;
+    cout<<"\nEnter values for bst and 0 to exit: ";
+    cin>>i;
+    while(i!=0)
+    {
+       if(root==NULL)
+       {
+           root=new Node();
+           root->left=0;
+           root->right=0;
+           root->info=i;
+       }
+       else
+       {
+           a=root;
+           b=new Node();
+           b->left=0;
+           b->right=0;
+           b->info=i;
+           while(a!=0)
+           {
+               if(i<a->info)
+               {
+                   c=a;
+                   a=a->left;
+               }
+               else
+               {
+                   if(i>=a->info)
+                   {
+                       c=a;
+                       a=a->right;
+                   }
+               }
+           }
+           if(i<c->info)
+           {
+               c->left=b;
+           }
+           else
+           {
+               c->right=b;
+           }
+       }
+    cout<<"\nEnter values for bst and 0 to exit: ";
+    cin>>i;
+    }
+}
+     
+void bst::recursive_inorder(Node *temp)
+{
+    if(temp!=0)
+    {
+        recursive_inorder(temp->left);
+        cout<<temp->info<<" ";
+        recursive_inorder(temp->right);
+    }
+}
+
+void bst::recursive_preorder(Node *temp)
+{   
+    if(temp!=0)
+    {
+        cout<<temp->info<<" ";
+        recursive_preorder(temp->left);
+        recursive_preorder(temp->right);
+    }
+}
+
+void bst::recursive_postorder(Node *temp)
+{
+    if(temp!=0)
+    {
+        recursive_postorder(temp->left);
+        recursive_postorder(temp->right);
+        cout<<temp->info<<" ";
+    }
+}
+
+
+
+int main()
+{Node *root=NULL;
+    bst b;
+    int c;
+    do
+    {
+        cout<<"\n-------------BST---------------\n";
+        cout<<"1) Insert                   2) Search a Node\n"
+            <<"3) recursive_inorder        4) recursive_preorder\n"
+            <<"5) recursive_postorder      6) iterative_inorder\n"
+            <<"7) iterative_preorder       8) iterative_postorder\n"
+            <<"9) BFS_Traversal            10)Mirror_Image\n"
+            <<"11)Count                    12)Search_Ele\n";
+        cout<<"\nEnter your choice:";
+        cin>>c;
+        switch(c)
+        {
+            case 1:
+              b.insert();
+              break;
+        }
+    }while(c!=0);
+}
