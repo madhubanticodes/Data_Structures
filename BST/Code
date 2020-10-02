@@ -332,10 +332,9 @@ int main()
         cout<<"\n-------------BST---------------\n";
         cout<<"1) Insert                   "
             <<"2) recursive_inorder        3) recursive_preorder\n"
-            <<"4) recursive_postorder      6) iterative_inorder\n"
-            <<"7) iterative_preorder       8) iterative_postorder\n"
-            <<"9) BFS_Traversal            10)Mirror_Image\n"
-            <<"11)Count                    12)Search_Ele\n";
+            <<"4) recursive_postorder      5) bfs Traversal\n"
+            <<"6) Count                    7) iterative_preorder\n"
+            <<"8) Search a Node\n";
         cout<<"\nEnter your choice:";
         cin>>choice;
         switch(choice)
@@ -364,9 +363,6 @@ int main()
             case 7:
                 b.iterative_preorder(root);
                 break;
-           // case 7:
-                //b.iterative_inorder(root);
-                //break;
             case 8:
                 cout<<"\nEnter element to be searched: ";
                 cin>>n;
