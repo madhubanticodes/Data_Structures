@@ -164,9 +164,8 @@ class Bst
         void iterative_preorder(Node*);
         //void iterative_postorder(Node*);
         void bfs_traversal(Node*);
-        //void mirror_image(Node*);
+        void mirror_image(Node*);
         void Count(Node*);
-        //void searchele(int ele);
 };
 
 void Bst::insert()
@@ -323,6 +322,19 @@ void   Bst::searching(Node* temp, int data){
         temp=temp->right;}
    }
 
+void Bst::mirror_image(Node* temp)
+{
+  if (temp != 0)
+    {
+        Node* temp1;
+        mirror_image(temp->left);
+        mirror_image(temp->right);
+        temp1 = temp->left;
+        temp->left  = temp->right;
+        temp->right = temp1;
+
+    }
+}
 int main()
 {
     Bst b;
@@ -334,7 +346,7 @@ int main()
             <<"2) recursive_inorder        3) recursive_preorder\n"
             <<"4) recursive_postorder      5) bfs Traversal\n"
             <<"6) Count                    7) iterative_preorder\n"
-            <<"8) Search a Node\n";
+            <<"8) Search a Node            9) Mirror Image\n";
         cout<<"\nEnter your choice:";
         cin>>choice;
         switch(choice)
@@ -371,6 +383,9 @@ int main()
                     cout<<"Found";
                 else
                     cout<<"\nNot Found";
+                break;
+            case 9:
+                b.mirror_image(root);
                 break;
             default:
               break;
