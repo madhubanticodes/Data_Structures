@@ -1,11 +1,19 @@
+//Code by Madhubanti Mitra
+//19/78015
+
 #include <iostream>
+
 using namespace std;
 
 const int size=10;
+int flag=0;
+int leaf=0;
+int non_leaf=0;
+
 class Node
 {
     public:
-     int info;
+     int data;
      Node *left;
      Node *right;
 };
@@ -85,7 +93,7 @@ class queue
          int isempty();
          int isfull();
 };
-    
+
 void queue::enqueue(Node *ele)
 {
     if(isfull())
@@ -143,28 +151,28 @@ int queue::isfull()
     return ((front==0&&rear==size-1)||front==rear+1);
 }
 
-class bst
+class Bst
 {
     Node *a,*b,*c;
     public:
         void insert();
-        void search(Node*,int);
+        void searching(Node*,int);
         void recursive_inorder(Node*);
-        void recursive_preorder(Node*);
+        void recursive_preorder(Node *);
         void recursive_postorder(Node*);
-        void iterative_inorder(Node*);
+        //void iterative_inorder(Node*);
         void iterative_preorder(Node*);
-        void iterative_postorder(Node*);
+        //void iterative_postorder(Node*);
         void bfs_traversal(Node*);
-        void mirror_image(Node*);
-        void count_leafs(Node*);
-        void searchele(int ele);
+        //void mirror_image(Node*);
+        void Count(Node*);
+        //void searchele(int ele);
 };
 
-void bst::insert()
+void Bst::insert()
 {
     int i;
-    cout<<"\nEnter values for bst and 0 to exit: ";
+    cout<<"\nEnter values for bst and 0 to exit:";
     cin>>i;
     while(i!=0)
     {
@@ -173,7 +181,7 @@ void bst::insert()
            root=new Node();
            root->left=0;
            root->right=0;
-           root->info=i;
+           root->data=i;
        }
        else
        {
@@ -181,24 +189,24 @@ void bst::insert()
            b=new Node();
            b->left=0;
            b->right=0;
-           b->info=i;
+           b->data=i;
            while(a!=0)
            {
-               if(i<a->info)
+               if(i<a->data)
                {
                    c=a;
                    a=a->left;
                }
                else
                {
-                   if(i>=a->info)
+                   if(i>=a->data)
                    {
                        c=a;
                        a=a->right;
                    }
                }
            }
-           if(i<c->info)
+           if(i<c->data)
            {
                c->left=b;
            }
@@ -207,63 +215,169 @@ void bst::insert()
                c->right=b;
            }
        }
-    cout<<"\nEnter values for bst and 0 to exit: ";
-    cin>>i;
+       cout<<"\nEnter values for bst and 0 to exit:";
+       cin>>i;
     }
 }
-     
-void bst::recursive_inorder(Node *temp)
+
+void Bst::recursive_inorder(Node *temp)
 {
     if(temp!=0)
     {
         recursive_inorder(temp->left);
-        cout<<temp->info<<" ";
+        cout<<temp->data<<" ";
         recursive_inorder(temp->right);
     }
 }
 
-void bst::recursive_preorder(Node *temp)
-{   
-    if(temp!=0)
+void Bst::recursive_preorder(Node *temp)
+{
+    if(temp!=NULL)
     {
-        cout<<temp->info<<" ";
+        cout<<temp->data<<" ";
         recursive_preorder(temp->left);
         recursive_preorder(temp->right);
     }
+
 }
 
-void bst::recursive_postorder(Node *temp)
+void Bst::recursive_postorder(Node *temp)
 {
     if(temp!=0)
     {
         recursive_postorder(temp->left);
         recursive_postorder(temp->right);
-        cout<<temp->info<<" ";
+        cout<<temp->data<<" ";
     }
+}
+
+void Bst::bfs_traversal(Node *temp)
+{
+    queue q;
+    if(temp!=0)
+    {
+        q.enqueue(temp);
+        while(!q.isempty())
+        {
+            temp=q.dequeue();
+            cout<<" "<<temp->data;
+            if(temp->left!=0)
+            {
+                q.enqueue(temp->left);
+            }
+            if(temp->right!=0)
+            {
+                q.enqueue(temp->right);
+            }
+        }
+    }
+}
+
+void Bst::Count(Node *temp)
+{
+    if(temp!=NULL)
+    {
+        if(temp->left!=NULL||temp->right!=NULL)
+           non_leaf++;
+        if(temp->left==NULL&&temp->right==NULL)
+           leaf++;
+        Count(temp->left);
+        Count(temp->right);
+    }
+
 }
 
 
 
+void Bst::iterative_preorder(Node *temp)
+{
+    stack s;
+    if(temp!=0)
+    {
+        s.push(temp);
+        while(!s.isempty())
+        {
+            temp=s.pop();
+            cout<<" "<<temp->data;
+            if(temp->right!=0)
+            {
+                s.push(temp->right);
+            }
+            if(temp->left!=0)
+            {
+                s.push(temp->left);
+            }
+        }
+    }
+}
+
+void   Bst::searching(Node* temp, int data){
+   while (temp != NULL )
+   {
+       if(temp->data == data)
+      {flag=1;
+      break;}
+      else if(data<temp->data)
+        temp=temp->left;
+      else
+        temp=temp->right;}
+   }
+
 int main()
 {
-    bst b;
-    int c;
+    Bst b;
+    int choice,n;
     do
     {
         cout<<"\n-------------BST---------------\n";
-        cout<<"1) Insert                   2) Search a Node\n"
-            <<"3) recursive_inorder        4) recursive_preorder\n"
-            <<"5) recursive_postorder      6) iterative_inorder\n"
+        cout<<"1) Insert                   "
+            <<"2) recursive_inorder        3) recursive_preorder\n"
+            <<"4) recursive_postorder      6) iterative_inorder\n"
             <<"7) iterative_preorder       8) iterative_postorder\n"
             <<"9) BFS_Traversal            10)Mirror_Image\n"
             <<"11)Count                    12)Search_Ele\n";
         cout<<"\nEnter your choice:";
-        cin>>c;
-        switch(c)
+        cin>>choice;
+        switch(choice)
         {
             case 1:
               b.insert();
               break;
+            case 2:
+              b.recursive_inorder(root);
+              break;
+            case 3:
+                b.recursive_preorder(root);
+                break;
+            case 4:
+                b.recursive_postorder(root);
+                break;
+            case 5:
+                b.bfs_traversal(root);
+                break;
+            case 6:
+                b.Count(root);
+                cout<<"No. of non-leafs: "<<non_leaf;
+                cout<<"\nNo. of leafs: "<<leaf;
+                cout<<"\nTotal no. of leafs: "<<non_leaf+leaf;
+                break;
+            case 7:
+                b.iterative_preorder(root);
+                break;
+           // case 7:
+                //b.iterative_inorder(root);
+                //break;
+            case 8:
+                cout<<"\nEnter element to be searched: ";
+                cin>>n;
+                b.searching(root,n);
+                if(flag==1)
+                    cout<<"Found";
+                else
+                    cout<<"\nNot Found";
+                break;
+            default:
+              break;
         }
-    }while(c!=0);
+    }while(choice!=0);
 }
