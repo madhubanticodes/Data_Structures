@@ -158,16 +158,16 @@ class Bst
         void insert();
         void searching(Node*,int);
         void recursive_inorder(Node*);
-        void recursive_preorder(Node *);
+        void recursive_preorder(Node*);
         void recursive_postorder(Node*);
-        //void iterative_inorder(Node*);
+        void iterative_inorder(Node*);
         void iterative_preorder(Node*);
-        //void iterative_postorder(Node*);
+        void iterative_postorder(Node*);
         void bfs_traversal(Node*);
         void mirror_image(Node*);
+        int height(Node*);
         void Count(Node*);
 };
-
 void Bst::insert()
 {
     int i;
@@ -285,7 +285,33 @@ void Bst::Count(Node *temp)
     }
 
 }
-
+void Bst::iterative_inorder(Node *temp)
+{
+    stack s;
+    while(temp!=0)
+    {
+        while(temp!=0)
+        {
+            if(temp->right!=NULL)
+            {
+                s.push(temp->right);
+            }
+            s.push(temp);
+            temp=temp->left;
+        }
+        temp=s.pop();
+        while(!s.isempty()&& temp->right ==0)
+        {
+            cout<<" "<<temp->data;
+            temp=s.pop();
+        }
+        cout<<" "<<temp->data;
+        if(!s.isempty())
+            temp=s.pop();
+        else
+            temp=NULL;
+    }
+}
 
 
 void Bst::iterative_preorder(Node *temp)
@@ -309,6 +335,28 @@ void Bst::iterative_preorder(Node *temp)
         }
     }
 }
+void Bst::iterative_postorder(Node *temp)
+{
+    stack s;
+    Node *q=temp;
+    while(temp!=0)
+    {
+        for(;temp->left!=0;temp=temp->left)
+        {
+            s.push(temp);
+        }
+        while(temp!=0 && (temp->right==NULL || temp->right==q))
+        {
+            cout<<" "<<temp->data;
+            q=temp;
+            if(s.isempty())
+                return;
+               temp=s.pop();
+        }
+        s.push(temp);
+        temp=temp->right;
+    }
+}
 
 void   Bst::searching(Node* temp, int data){
    while (temp != NULL )
@@ -323,18 +371,36 @@ void   Bst::searching(Node* temp, int data){
    }
 
 void Bst::mirror_image(Node* temp)
-{
+{ queue q;
   if (temp != 0)
     {
-        Node* temp1;
-        mirror_image(temp->left);
-        mirror_image(temp->right);
-        temp1 = temp->left;
-        temp->left  = temp->right;
-        temp->right = temp1;
-
+        q.enqueue(temp);
+        while(!q.isempty())
+        {
+            temp=q.dequeue();
+            cout<<" "<<temp->data;
+            if(temp->right!=0)
+            {
+                q.enqueue(temp->right);
+            }
+            if(temp->left!=0)
+            {
+                q.enqueue(temp->left);
+            }
+        }
     }
 }
+int Bst:: height(Node* temp)
+ {int leftHeight = 0, rightHeight = 0;
+        if(temp->left != NULL)
+            leftHeight = height(temp->left);
+        if(temp->right != NULL)
+            rightHeight = height(temp->right);
+        int max = (leftHeight > rightHeight) ? leftHeight : rightHeight;
+        return (max + 1);
+    }
+
+
 int main()
 {
     Bst b;
@@ -342,11 +408,12 @@ int main()
     do
     {
         cout<<"\n-------------BST---------------\n";
-        cout<<"1) Insert                   "
-            <<"2) recursive_inorder        3) recursive_preorder\n"
-            <<"4) recursive_postorder      5) bfs Traversal\n"
-            <<"6) Count                    7) iterative_preorder\n"
-            <<"8) Search a Node            9) Mirror Image\n";
+        cout<<"1) Insert                   2) recursive_inorder\n"
+            <<"3) recursive_preorder\n     4) recursive_postorder\n"
+            <<"5) iterative_inorder        6) iterative_preorder\n"
+            <<"7) iterative_postorder      8) bfs Traversal\n"
+            <<"9) Mirror Image             10)Height of Tree\n"
+            <<"11)Count                    12)Search a Node\n";
         cout<<"\nEnter your choice:";
         cin>>choice;
         switch(choice)
@@ -364,18 +431,30 @@ int main()
                 b.recursive_postorder(root);
                 break;
             case 5:
-                b.bfs_traversal(root);
+                b.iterative_inorder(root);
                 break;
             case 6:
+                b.iterative_preorder(root);
+                break;
+            case 7:
+                b.iterative_postorder(root);
+                break;
+            case 8:
+                b.bfs_traversal(root);
+                break;
+            case 9:
+                b.mirror_image(root);
+                break;
+            case 10:
+                cout<<b.height(root);
+                break;
+            case 11:
                 b.Count(root);
                 cout<<"No. of non-leafs: "<<non_leaf;
                 cout<<"\nNo. of leafs: "<<leaf;
                 cout<<"\nTotal no. of leafs: "<<non_leaf+leaf;
                 break;
-            case 7:
-                b.iterative_preorder(root);
-                break;
-            case 8:
+            case 12:
                 cout<<"\nEnter element to be searched: ";
                 cin>>n;
                 b.searching(root,n);
@@ -383,9 +462,6 @@ int main()
                     cout<<"Found";
                 else
                     cout<<"\nNot Found";
-                break;
-            case 9:
-                b.mirror_image(root);
                 break;
             default:
               break;
