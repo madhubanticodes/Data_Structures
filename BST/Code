@@ -409,7 +409,7 @@ int main()
     {
         cout<<"\n-------------BST---------------\n";
         cout<<"1) Insert                   2) recursive_inorder\n"
-            <<"3) recursive_preorder\n     4) recursive_postorder\n"
+            <<"3) recursive_preorder       4) recursive_postorder\n"
             <<"5) iterative_inorder        6) iterative_preorder\n"
             <<"7) iterative_postorder      8) bfs Traversal\n"
             <<"9) Mirror Image             10)Height of Tree\n"
