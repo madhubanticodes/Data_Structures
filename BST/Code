@@ -167,6 +167,11 @@ class Bst
         void mirror_image(Node*);
         int height(Node*);
         void Count(Node*);
+        void delByMerge(Node*,int);
+        void delm(Node*&);
+        void delByCopy(Node*,int);
+        void delc(Node*&);
+        //void replacing(Node*,int,int);
 };
 void Bst::insert()
 {
@@ -400,6 +405,113 @@ int Bst:: height(Node* temp)
         return (max + 1);
     }
 
+void Bst::delByMerge(Node *temp,int el)
+
+    {
+        Node* prev=NULL;
+        while(temp!=NULL)
+        {
+            if(temp->data==el)
+			break;
+            prev=temp;
+            if(temp->data<el)
+            temp=temp->right;
+            else
+			temp=temp->left;
+        }
+        if(temp!=NULL&&temp->data==el)
+        {
+            if(temp==root)
+			 delm(root);
+            else if(prev->left==temp)
+			 delm(prev->left);
+            else
+                delm(prev->right);
+        }
+        else if(root!=0)
+        cout<<"\n\tKEY "<<el<<" IS NOT IN TREE";
+        else
+		cout<<"\n\tTREE IS EMPTY";
+    }
+
+void Bst::delm(Node*& temp1)
+    {
+        Node* tmp=temp1;
+        if(temp1!=NULL)
+        {
+        if(temp1->right==NULL)
+            temp1=temp1->left;
+        else if(temp1->left==NULL)
+            temp1=temp1->right;
+        else
+        {
+            tmp=temp1->left;
+            while(tmp->right!=NULL)
+            {
+            tmp=tmp->right;
+            }
+            tmp->right=temp1->right;
+            tmp=temp1;
+            temp1=temp1->left;
+        }
+        delete tmp;
+        cout<<"\nDeleted";
+        }
+    }
+    void Bst::delByCopy(Node *temp,int el)
+    {
+        Node* prev=NULL;
+        while(temp!=NULL)
+        {
+            if(temp->data==el)
+			break;
+            prev=temp;
+            if(temp->data<el)
+            temp=temp->right;
+            else
+			temp=temp->left;
+        }
+        if(temp!=NULL&&temp->data==el)
+        {
+            if(temp==root)
+			 delc(root);
+            else if(prev->left==temp)
+			 delc(prev->left);
+            else
+			 delc(prev->right);
+        }
+        else if(root!=0)
+        cout<<"\n\tKEY "<<el<<" IS NOT IN TREE";
+        else
+		cout<<"\n\tTREE IS EMPTY";
+    }
+
+    void Bst::delc(Node*& temp1)
+    {
+        Node* prev,*tmp=temp1;
+        if(temp1->right==NULL)
+            temp1=temp1->left;
+        else if(temp1->left==NULL)
+            temp1=temp1->right;
+        else
+        {
+            tmp=temp1->left;
+            prev=temp1;
+            while(tmp->right!=NULL)
+            {
+                prev=tmp;
+                tmp=tmp->right;
+            }
+            temp1->data=tmp->data;
+            if(prev==temp1)
+                prev->left=tmp->left;
+            else
+                prev->right=tmp->left;
+        }
+        delete tmp;
+        cout<<"\nDeleted";
+    }
+
 
 int main()
 {
@@ -413,7 +525,9 @@ int main()
             <<"5) iterative_inorder        6) iterative_preorder\n"
             <<"7) iterative_postorder      8) bfs Traversal\n"
             <<"9) Mirror Image             10)Height of Tree\n"
-            <<"11)Count                    12)Search a Node\n";
+            <<"11)Count                    12)Search a Node\n"
+            <<"13)Delete By Merging        14)Delete by Copying\n"
+            <<"15)Exit the Program\n";
         cout<<"\nEnter your choice:";
         cin>>choice;
         switch(choice)
@@ -463,7 +577,22 @@ int main()
                 else
                     cout<<"\nNot Found";
                 break;
+            case 13:
+                cout<<"\nEnter element to be deleted : ";
+                int del;
+                cin>>del;
+                b.delByMerge(root,del);
+                break;
+            case 14:
+                cout<<"\nEnter element to be deleted : ";
+                int del2;
+                cin>>del2;
+               b.delByCopy(root,del2);
+               break;
+            case 15:
+                exit(1);
             default:
+                cout<<"\nPlease enter a valid choice";
               break;
         }
     }while(choice!=0);
