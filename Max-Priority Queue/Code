@@ -1,0 +1,151 @@
+// Madhubanti Mitra
+// 19/78015
+
+#include<iostream>
+using namespace std;
+
+int tree_size = 20;
+int heap_size = 0;
+
+void swap( int *a, int *b ) {
+  int temp;
+  temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+//function to get right child of a tree
+int get_rightChild(int A[], int index) {
+  if((((2*index)+1) < tree_size) && (index >= 1))
+    return (2*index)+1;
+  return -1;
+}
+
+//function to get left child of a tree
+int get_leftChild(int A[], int index) {
+    if(((2*index) < tree_size) && (index >= 1))
+        return 2*index;
+    return -1;
+}
+
+//function to get the parent of a tree
+int get_parent(int A[], int index) {
+  if ((index > 1) && (index < tree_size)) {
+    return index/2;
+  }
+  return -1;
+}
+
+void max_heapify(int A[], int index) {
+  int left_child_index = get_leftChild(A, index);
+  int right_child_index = get_rightChild(A, index);
+
+  // finding largest among index, left child and right child
+  int largest = index;
+
+  if ((left_child_index <= heap_size) && (left_child_index>0)) {
+    if (A[left_child_index] > A[largest]) {
+      largest = left_child_index;
+    }
+  }
+
+  if ((right_child_index <= heap_size && (right_child_index>0))) {
+    if (A[right_child_index] > A[largest]) {
+      largest = right_child_index;
+    }
+  }
+
+  if (largest != index) {
+    swap(&A[index], &A[largest]);
+    max_heapify(A, largest);
+  }
+}
+
+void build_max_heap(int A[]) {
+  int i;
+  for(i=heap_size/2; i>=1; i--) {
+    max_heapify(A, i);
+  }
+}
+
+void maximum(int A[]) {
+  cout<< A[1];
+}
+
+int extract_max(int A[]) {
+  int maxm = A[1];
+  A[1] = A[heap_size];
+  heap_size--;
+  max_heapify(A, 1);
+  return maxm;
+}
+
+void increase_key(int A[], int index, int key) {
+  A[index] = key;
+  while((index>1) && (A[get_parent(A, index)] < A[index])) {
+    swap(&A[index], &A[get_parent(A, index)]);
+    index = get_parent(A, index);
+  }
+}
+
+void insert(int A[], int key) {
+  heap_size++;
+  A[heap_size] = -1*100000;
+  increase_key(A, heap_size, key);
+}
+
+void print_heap(int A[]) {
+  int i;
+  for(i=1; i<=heap_size; i++) {
+    cout<<"\n"<<A[i];
+  }
+  cout<<"\n";
+}
+
+int main() {
+  int A[tree_size];
+  int choice;
+  do
+  {
+      cout<<"\n--------- MENU FOR MAX-HEAP ----------\n";
+      cout<<"1)Max-Heap Insert                   2)Heap-Maximum\n"
+          <<"3)Heap Extract Max                  4)Heap Increase Key\n"
+          <<"                0)Exit the program                      \n";
+     cout<<"\nEnter your choice=";
+      cin>>choice;
+  switch(choice)
+  {
+  case 1:
+    insert(A,14);
+    insert(A,31);
+    insert(A,19);
+    insert(A,27);
+    insert(A,42);
+    insert(A,35);
+    insert(A,44);
+    insert(A,26);
+    insert(A,31);
+    insert(A,10);
+    print_heap(A);
+      break;
+  case 2:
+    maximum(A);
+    break;
+  case 3:
+    extract_max(A);
+    print_heap(A);
+    break;
+  case 4:
+    increase_key(A,5,24);
+    print_heap(A);
+    break;
+  case 5:
+    exit(1);
+    break;
+  default:
+    cout<<"Wrong Choice\n";
+    break;
+  }
+    }while(choice!=0);
+
+}
