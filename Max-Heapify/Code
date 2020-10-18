@@ -1,51 +1,81 @@
-//Madhubanti Mitra
-//19/78015
+// Madhubanti Mitra
+// 19/78015
 
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-void max_heapify(int *arr, int i, int n)
-{
-    int temp,j;
-    temp = arr[i];
-    j = 2 * i;
-    while (j <= n)
-    {
-        if (j < n && arr[j+1] > arr[j])
-            j = j + 1;
-        if (temp > arr[j])
-            break;
-        else if (temp <= arr[j])
-        {
-            arr[j / 2] = arr[j];
-            j = 2 * j;
-        }
-    }
-    arr[j/2] = temp;
+int tree_size = 20;
+int heap_size = 10;
+
+void swap( int *a, int *b ) {
+  int temp;
+  temp = *a;
+  *a = *b;
+  *b = temp;
 }
-void build_maxheap(int *arr,int n)
-{
-    int i;
-    for(i = n/2; i >= 1; i--)
-    {
-        max_heapify(arr,i,n);
-    }
+
+//function to get right child of a tree
+int get_rightChild(int A[], int index) {
+  if((((2*index)+1) < tree_size) && (index >= 1))
+    return (2*index)+1;
+  return -1;
 }
-int main()
-{
-    int arr[50];
-    int i,n;
-    cout<<"Enter number of elements in the array:\n";
-    cin>>n;
-    for (i = 1; i <= n; i++)
-    {
-        cout<<"Enter the element "<<(i)<<" :\n";
-        cin>>arr[i];
+
+//function to get left child of a tree
+int get_leftChild(int A[], int index) {
+    if(((2*index) < tree_size) && (index >= 1))
+        return 2*index;
+    return -1;
+}
+
+//function to get the parent of a tree
+int get_parent(int A[], int index) {
+  if ((index > 1) && (index < tree_size)) {
+    return index/2;
+  }
+  return -1;
+}
+
+void max_heapify(int A[], int index) {
+  int left_child_index = get_leftChild(A, index);
+  int right_child_index = get_rightChild(A, index);
+
+  // finding largest among index, left child and right child
+  int largest = index;
+
+  if ((left_child_index <= heap_size) && (left_child_index>0)) {
+    if (A[left_child_index] > A[largest]) {
+      largest = left_child_index;
     }
-    build_maxheap(arr,n);
-    cout<<"Max Heap:\n";
-    for (i = 1; i <= n; i++)
-    {
-        cout<<arr[i]<<endl;
+  }
+
+  if ((right_child_index <= heap_size && (right_child_index>0))) {
+    if (A[right_child_index] > A[largest]) {
+      largest = right_child_index;
     }
+  }
+
+  if (largest != index) {
+    swap(&A[index], &A[largest]);
+    max_heapify(A, largest);
+  }
+}
+
+void build_max_heap(int A[]) {
+  int i;
+  for(i=heap_size/2; i>=1; i--) {
+    max_heapify(A, i);
+  }
+}
+
+int main() {
+  int A[tree_size];
+  cout<<"\nEnter elements for the heap: ";
+  for(int i=1;i<=10;i++)
+    cin>>A[i];
+  build_max_heap(A);
+  for(int i=1;i<=10;i++)
+  {
+      cout<<"\n"<<A[i];
+  }
 }
