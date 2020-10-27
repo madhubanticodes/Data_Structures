@@ -1,0 +1,115 @@
+//Code by Madhubanti Mitra
+//19/78015
+
+#include<iostream>
+using namespace std;
+template <class insertion>
+class sort{
+public:
+  void insertionSort(int arr[],int n){
+  int i, key, j;
+    for (i = 1; i < n; i++)
+    {
+        key = arr[i];
+        j = i - 1;
+        while (j >= 0 && arr[j] > key)
+        {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+        arr[j + 1] = key;
+    }
+    cout<<"\nSorted array : ";
+    for(int i=0;i<n;i++)
+    {
+        cout<<" "<<arr[i];
+    }
+    }
+template <class bubble>
+  void bubbleSort(bubble arr[],int n){
+      int i,j;
+    for(i=0;i<n-1;i++)
+        {
+            for(j=0;j<n-1;j++)
+            {
+                if(arr[j]>arr[j+1])
+                    {
+                    int temp=arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                    }
+            }
+        }
+    cout<<"\nSorted array : ";
+    for(int i=0;i<n;i++)
+    {
+        cout<<" "<<arr[i];
+    }
+        }
+
+template <class selection>
+   void  selectionSort(selection arr[],int n){
+     int i,j,pos,temp;
+    for(i=0;i<n-1;i++)
+    {
+        pos=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(arr[j]<arr[pos])
+                pos=j;
+        }
+        temp=arr[pos];
+        arr[pos]=arr[i];
+        arr[i]=temp;
+    }
+    cout<<"\nSorted array : ";
+    for(int i=0;i<n;i++)
+    {
+        cout<<" "<<arr[i];
+    }
+  }
+};
+    int main()
+    {sort<int> s;
+      int i,n,a[25];
+      int choice;
+      do
+      {
+      cout<<"\n--------- SORTING MENU ----------- \n";
+      cout<<"1) Insertion Sort\n"
+          <<"2) Bubble Sort\n"
+          <<"3) Selection Sort\n"
+          <<"4) Exit the Progran\n";
+
+      cout<<"Enter your choice: \n";
+      cin>>choice;
+      cout<<"Enter the range: \n";
+      cin>>n;
+      switch(choice)
+      {
+      case 1:
+        cout<<"\nEnter elements:\n";
+                for(i=0;i<n;i++)
+                    cin>>a[i];
+                s.insertionSort(a,n);
+               break;
+      case 2:
+          cout<<"\nEnter elements:\n";
+                for(i=0;i<n;i++)
+                    cin>>a[i];
+                s.bubbleSort(a,n);
+                break;
+      case 3:
+          cout<<"\nEnter elements:\n";
+                for(i=0;i<n;i++)
+                    cin>>a[i];
+                s.selectionSort(a,n);
+                break;
+      case 4:
+        exit(1);
+      default:
+        cout<<"\nWrong Choice!";
+        break;
+      }
+    }while(choice!=0);
+    }
