@@ -1,0 +1,107 @@
+#include<iostream>
+
+using namespace std;
+class diagonal
+{
+    int *a;//array
+    int n;
+public:
+    diagonal(int size=30)
+    {
+        n=size;
+        if(size!=0)
+        a=new int[n];
+        else
+            a=0;
+
+    }
+    ~diagonal()
+    {
+        delete []a;
+
+    }
+    void store(int,int,int);
+    int retrieve(int,int);
+    void display();
+
+};
+
+ void diagonal::store(int x,int i,int j)
+ {
+     if(i<0 || i>n )
+     {
+         cout<<"Out of Bound!!";
+         exit(0);
+     }
+
+     else if(i>j && x!=0)
+     {
+         cout<<"Must be zero";
+     }
+
+     else if(i==j)
+     {
+         a[i]=x;
+     }
+ }
+
+ int diagonal::retrieve(int i,int j)
+ {
+    if(i<0 || j<0 || i>n || j>n)
+    {
+        cout<<"Out of Bound!!";
+        exit(0);
+    }
+    else if(i==j)
+    {
+
+        return a[i];
+    }
+
+    else
+       return 0;
+ }
+
+ void diagonal::display()
+ {
+     for(int i=0;i<n;i++)
+     {
+         for(int j=0;j<n;j++)
+         {
+             if(i!=j)
+                cout<<"0"<<"\t";
+             else
+                cout<<a[i]<<"\t";
+         }
+         cout<<"\n";
+     }
+ }
+
+ int main()
+ {
+     int r=0,c=0,i=0,j=0;
+     int x;
+     cout<<"Enter the number of rows and columns in the diagonal matrix: ";
+     cin>>r>>c;
+     if(r!=c)
+     {
+         cout<<"Invalid size entered";
+         exit(0);
+     }
+     diagonal d(r);
+     cout<<"\nEnter the elements of diagonal matrix: ";
+     for(i=0,j=0;i<r,j<c;i++,j++)
+     {
+        cin>>x;
+        d.store(x,i,j);
+     }
+    cout<<"\nThe diagonal matrix is: \n";
+    d.display();
+    cout<<"\nEnter the position for retrieval: ";
+    cin>>i>>j;
+    int value=d.retrieve(i,j);
+    cout<<"\nRetrieved value is: "<<value;
+    cout<<"\n";
+    return 0;
+ }
+
