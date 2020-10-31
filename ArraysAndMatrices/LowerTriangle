@@ -1,0 +1,107 @@
+clude<iostream>
+
+using namespace std;
+class Lower
+{
+    int *a;//array
+    int n;
+public:
+    Lower(int size=30)
+    {
+        n=size;
+        if(size!=0)
+        a=new int[n*n+1/2];
+        else
+            a=0;
+
+    }
+    ~Lower()
+    {
+        delete []a;
+
+    }
+    void store(int,int,int);
+    int retrieve(int,int);
+    void display();
+
+};
+
+ void Lower::store(int x,int i,int j)
+ {
+     if(i<1 || i>n || j<1 || j>n)
+     {
+         cout<<"Out of Bound!!";
+         exit(0);
+     }
+     else if(i>=j)
+     {
+          int k=(i*(i-1)/2)+j;
+          a[k]=x;
+     }
+ }
+
+ int Lower::retrieve(int i,int j)
+ {
+    if(i<1 || j<1 || i>n || j>n)
+    {
+        cout<<"Out of Bound!!";
+        exit(0);
+    }
+    else if(i<j)
+    {
+        return 0;
+    }
+
+    else
+    {
+       int k=a[i*(i-1)/2+j];
+       return k;
+    }
+ }
+
+ void Lower::display()
+ {
+     for(int i=1;i<=n/2;i++)
+     {   cout<<"\n";
+         for(int j=1;j<=n/2;j++)
+         {
+             if(i<j)
+                cout<<"0"<<"\t";
+             else
+             {
+                  int k=(i*(i-1)/2)+j;
+                cout<<a[k]<<"\t";
+             }
+         }
+     }
+ }
+
+ int main()
+ {int r,i,j,x;
+    cout<<"\nEnter number of elements : ";
+    cin>>r;
+    Lower d(r);
+    for(i=1;i<=r/2;i++)
+    {
+        for(j=1;j<=r/2;j++)
+        {
+           if(i>=j)
+           {
+               cout<<"\nEnter the elements: ";
+               cin>>x;
+               d.store(x,i,j);
+           }
+        }
+
+    }
+    cout<<"\nThe Lower Triangular matrix is : ";
+    d.display();
+    cout<<"\nEnter the position for retrieval : ";
+    cin>>i>>j;
+    int value=d.retrieve(i,j);
+    cout<<"\nRetrieved value is : "<<value;
+    return 0;
+
+ }
+
+
