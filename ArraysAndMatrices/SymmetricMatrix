@@ -1,0 +1,116 @@
+#include<iostream>
+using namespace std;
+
+class Symmetric
+{
+    int *a;
+    int n;
+public:
+    Symmetric(int size=30)
+    {
+        int i,j;
+        n=size;
+        if(size!=0)
+            a=new int[n*(n+1)/2];
+        else
+            a=0;
+
+    }
+    ~Symmetric()
+    {
+        delete []a;
+
+    }
+    void store(int,int ,int);
+    int retrieve(int,int);
+    void display();
+
+};
+
+void Symmetric::store(int x,int i,int j)
+ {
+     if(i<1 || i>n || j<1 || j>n)
+     {
+         cout<<"Out of Bound";
+         exit(0);
+     }
+
+     else if(i<j)
+        return;
+     {
+         int k=i*(i-1)/2+j-1;
+         a[k]=x;
+     }
+ }
+
+ int Symmetric::retrieve(int i,int j)
+ {
+    int t;
+    if(i<1 || j<1 || i>n || j>n)
+    {
+        cout<<"Out of Bound";
+        exit(0);
+    }
+    if(i<j)
+    {
+        t=i;
+        i=j;
+        j=t;
+    }
+
+        return a[i*(i-1)/2+j-1];
+}
+
+
+ void Symmetric::display()
+ {
+     for(int i=1;i<=n;i++)
+     {
+         for(int j=1;j<=n;j++)
+         {
+             if(i<j)
+                cout<<a[j*(j-1)/2+i-1]<<"\t";
+             else
+             {
+                cout<<a[i*(i-1)/2+j-1]<<"\t";
+             }
+         }
+         cout<<"\n";
+     }
+ }
+
+ int main()
+ {
+     int r=0,c=0;
+     int i,j,x;
+     cout<<"\nEnter the number of rows: ";
+     cin>>r;
+     cout<<"\nEnter the number of columns:";
+     cin>>c;
+     if(r!=c)
+     {
+         cout<<"Invalid Entry";
+         exit(0);
+     }
+     Symmetric s(r);
+     cout<<"\nEnter the elements of symmetric matrix: \n";
+     for(i=1;i<=c;i++)
+     {
+         for(j=1;j<=i;j++)
+         {
+             cin>>x;
+             s.store(x,i,j);
+         }
+     }
+    cout<<"\nThe Symmetric Matrix is: \n";
+    s.display();
+    cout<<"\nEnter the position for retrieval: ";
+    cout<<"\nEnter the row: ";
+    cin>>i;
+    cout<<"\nEnter the column: ";
+    cin>>j;
+    int value=s.retrieve(i,j);
+    cout<<"\nRetrieved element is: "<<value;
+    cout<<"\n";
+    return 0;
+ }
