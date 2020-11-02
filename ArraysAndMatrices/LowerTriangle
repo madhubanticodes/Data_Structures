@@ -1,6 +1,6 @@
-clude<iostream>
-
+#include<iostream>
 using namespace std;
+
 class Lower
 {
     int *a;//array
@@ -30,7 +30,7 @@ public:
  {
      if(i<1 || i>n || j<1 || j>n)
      {
-         cout<<"Out of Bound!!";
+         cout<<"Out of Bound";
          exit(0);
      }
      else if(i>=j)
@@ -44,7 +44,7 @@ public:
  {
     if(i<1 || j<1 || i>n || j>n)
     {
-        cout<<"Out of Bound!!";
+        cout<<"Out of Bound";
         exit(0);
     }
     else if(i<j)
@@ -101,7 +101,7 @@ public:
     int value=d.retrieve(i,j);
     cout<<"\nRetrieved value is : "<<value;
     return 0;
-
  }
+
 
 
