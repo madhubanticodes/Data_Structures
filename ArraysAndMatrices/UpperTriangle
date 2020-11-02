@@ -1,6 +1,6 @@
 #include<iostream>
-
 using namespace std;
+
 class Upper
 {
     int *a;//array
@@ -30,7 +30,7 @@ public:
  {
      if(i<0 || i>n || j<0 || j>n)
      {
-         cout<<"Out of Bound!!";
+         cout<<"Out of Bound";
          exit(0);
      }
      else if(i<=j)
@@ -45,7 +45,7 @@ public:
  {
     if(i<0 || j<0 || i>n || j>n)
     {
-        cout<<"Out of Bound!!";
+        cout<<"Out of Bound";
         exit(0);
     }
     else if(i>j)
@@ -93,7 +93,6 @@ public:
                d.store(x,i,j);
            }
         }
-
     }
     cout<<"\nThe Upper Triangular matrix is : ";
     d.display();
@@ -102,7 +101,9 @@ public:
     int value=d.retrieve(i,j);
     cout<<"\nRetrieved value is : "<<value;
     return 0;
-
  }
+
+
+
 
 
